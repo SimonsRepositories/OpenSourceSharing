@@ -10,5 +10,4 @@ public class OpensourcesharingApplication {
 		SpringApplication.run(OpensourcesharingApplication.class, args);
 		System.out.println("Hello World");
 	}
-
 }
