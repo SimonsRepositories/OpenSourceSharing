@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller //Original: @RestController
+@RestController
+@RequestMapping("/api/public")
 public class PublicController {
 
-    @RequestMapping(value = "/api/public", method = RequestMethod.GET)
+    @GetMapping
     public String getMessage() {
         return "home";
     }
