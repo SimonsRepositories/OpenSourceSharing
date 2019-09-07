@@ -8,6 +8,5 @@ public class OpensourcesharingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OpensourcesharingApplication.class, args);
-		//Hello World
 	}
 }
