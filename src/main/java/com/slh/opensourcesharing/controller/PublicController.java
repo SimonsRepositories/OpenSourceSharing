@@ -10,6 +10,6 @@ public class PublicController {
 
     @GetMapping
     public String getMessage() {
-        return "Hello from public API controller";
+        return "home.jsp";
     }
 }
