@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService
         CustomUserDetails userDetails = null;
         if(user != null) {
             userDetails = new CustomUserDetails();
-            userDetails.setUser(user);
+            userDetails.setUser(user); //important: Install Lombok plugin in File -> Settings -> Plugins. Annotations such as @Getter and @Setter will not suffice.
         } else {
             throw new UsernameNotFoundException("User does not exist with name : " + username);
         }
