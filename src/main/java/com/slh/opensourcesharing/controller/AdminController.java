@@ -5,12 +5,11 @@ import com.slh.opensourcesharing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/secure/rest")
 public class AdminController
 {
@@ -20,9 +19,29 @@ public class AdminController
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    //trying to get data from json (working)
+    //-----------------------------------------------------------
+    //@PreAuthorize("hasAnyRole('ADMIN')")
+    /*@PostMapping("/admin/add")
+    public String addUserByAdmin(@RequestBody User user)
+    {
+        String pwd = user.getPassword();
+        String encryptPwd = passwordEncoder.encode(pwd);
+        user.setPassword(encryptPwd);
+        userRepository.save(user);
+        return "user added successfully...";
+    }*/
+
+    //trying to get data from form
+    //------------------------------------------------------------
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
     @PostMapping("/admin/add")
-    public String addUserBAdmin(@RequestBody User user)
+    public String addUserByAdmin(@ModelAttribute User user)
     {
         String pwd = user.getPassword();
         String encryptPwd = passwordEncoder.encode(pwd);

@@ -1,5 +1,5 @@
-package com.slh.opensourcesharing.service;
-
+//package com.slh.opensourcesharing.service;
+/*
 import com.slh.opensourcesharing.model.User;
 import com.slh.opensourcesharing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +27,4 @@ public class CustomUserDetailsService implements UserDetailsService
         }
         return userDetails;
     }
-}
+}*/

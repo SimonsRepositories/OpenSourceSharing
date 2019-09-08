@@ -20,25 +20,25 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.userDetailsService(userDetailsService).passwordEncoder(encodePWD());
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest()
-                .permitAll().and().authorizeRequests().antMatchers("/secure/**")
-                .authenticated().anyRequest().hasAnyRole("ADMIN").and().formLogin().permitAll();
+        //http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest()
+        //      .permitAll().and().authorizeRequests().antMatchers("/secure/**")
+        //      .authenticated().anyRequest().hasAnyRole("ADMIN").and().formLogin().permitAll();
     }
 
     @Bean
@@ -46,5 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         return new BCryptPasswordEncoder();
     }
+
+    //https://www.youtube.com/watch?v=xRE12Y-PFQs&list=PL3hpmQhMoz-cz1GBAtovJyrfspZctG03L&index=4&t=0s
     
 }

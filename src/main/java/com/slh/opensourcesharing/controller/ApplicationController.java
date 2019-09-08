@@ -11,6 +11,6 @@ public class ApplicationController
     @GetMapping("/process")
     public String process()
     {
-        return "processing...";
+        return "welcome to the dashboard!";
     }
 }
