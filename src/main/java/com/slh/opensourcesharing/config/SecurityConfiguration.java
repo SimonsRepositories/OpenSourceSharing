@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private CustomLoginSuccessHandler sucessHandler;
+    private CustomLoginSuccessHandler successHandler;
 
     @Autowired
     private DataSource dataSource;
@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .csrf().disable().formLogin()
                 .loginPage("/page/login")
                 .failureUrl("/page/login?error=true")
-                .successHandler(sucessHandler)
+                .successHandler(successHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
