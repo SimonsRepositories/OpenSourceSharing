@@ -15,6 +15,9 @@ import java.util.Set;
 @Table(name = "auth_user")
 public class User
 {
+    //Default constructor required by JPA
+    public User(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "auth_user_id")
