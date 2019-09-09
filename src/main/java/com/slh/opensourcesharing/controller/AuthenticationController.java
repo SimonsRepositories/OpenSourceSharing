@@ -1,5 +1,7 @@
 package com.slh.opensourcesharing.controller;
 
+import com.slh.opensourcesharing.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,9 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController
 {
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -45,9 +50,11 @@ public class AuthenticationController
             modelMap.addAttribute("bindingResult", bindingResult);
         }
         //save the user if no binding errors
-        else {
-            //save the user registration form
-
+        else if(userService.isUserAlreadyPresent(user)){
+            modelAndView.addObject("successMessage", "User already exists!");
+        } else {
+            userService.saveUser(user);
+            modelAndView.addObject("successMessage", "User is registered successfully");
         }
         modelAndView.addObject("user", new User());
         modelAndView.setViewName("register");
