@@ -17,6 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -27,6 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private CustomLoginSuccessHandler sucessHandler;
 
     @Autowired
     private DataSource dataSource;
@@ -48,24 +53,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-                //URLs matching for access rights
+                // URLs matching for access rights
                 .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/page/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
+                .antMatchers("/admin/**").hasAnyAuthority("SUPER_USER","ADMIN_USER")
                 .anyRequest().authenticated()
                 .and()
-                //form login
+                // form login
                 .csrf().disable().formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/home")
+                .loginPage("/page/login")
+                .failureUrl("/page/login?error=true")
+                .successHandler(sucessHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
-                //logout
+                // logout
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/login"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
@@ -76,6 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     {
         web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
+
 
     //https://www.youtube.com/watch?v=xRE12Y-PFQs&list=PL3hpmQhMoz-cz1GBAtovJyrfspZctG03L&index=4&t=0s
     
