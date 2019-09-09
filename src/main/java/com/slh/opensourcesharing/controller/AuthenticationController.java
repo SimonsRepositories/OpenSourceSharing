@@ -8,16 +8,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthenticationController
 {
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/login"); //resources/templates/login.html
+        modelAndView.setViewName("login"); //resources/templates/login.html
         return modelAndView;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView register()
-    {
+    public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView();
         // User user = new User();
         // modelAndView.addObject("user", user);
