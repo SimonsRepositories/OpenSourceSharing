@@ -16,7 +16,7 @@ public class Role
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "auth_role_id")
-    private int role_id;
+    private int id;
 
     @Column(name = "role_name")
     private String role;
@@ -24,12 +24,12 @@ public class Role
     @Column(name = "role_desc")
     private String desc;
 
-    public int getRole_id() {
-        return role_id;
+    public int getId() {
+        return id;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRole() {
