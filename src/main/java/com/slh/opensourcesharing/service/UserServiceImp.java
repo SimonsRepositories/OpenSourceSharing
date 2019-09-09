@@ -15,11 +15,11 @@ import java.util.HashSet;
 public class UserServiceImp implements UserService
 {
     @Autowired
-    BCryptPasswordEncoder encoder;
+    public BCryptPasswordEncoder encoder;
     @Autowired
-    RoleRepository roleRepository;
+    public RoleRepository roleRepository;
     @Autowired
-    UserRepository userRepository;
+    public UserRepository userRepository;
 
     @Override
     public void saveUser(User user) {
