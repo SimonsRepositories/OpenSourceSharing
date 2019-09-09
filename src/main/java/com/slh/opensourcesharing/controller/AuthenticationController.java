@@ -28,8 +28,8 @@ public class AuthenticationController
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView();
-        // User user = new User();
-        // modelAndView.addObject("user", user);
+        User user = new User();
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("register"); //resources/templates/register.html
         return modelAndView;
     }
@@ -41,10 +41,17 @@ public class AuthenticationController
         return modelAndView;
     }
 
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public ModelAndView adminHome() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin"); // resources/template/admin.html
+        return modelAndView;
+    }
+
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) {
         ModelAndView modelAndView = new ModelAndView();
-        // CHeck for the validation
+        // Check for the validation
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
             modelMap.addAttribute("bindingResult", bindingResult);
