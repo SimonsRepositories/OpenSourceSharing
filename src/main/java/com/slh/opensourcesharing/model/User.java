@@ -17,14 +17,17 @@ public class User
     @Column(name= "auth_user_id")
     private int id;
 
-    @Column(name="username")
-    private String username;
+    @Column(name = "first_name")
+    private String name;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "last_name")
+    private String lastname;
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),
