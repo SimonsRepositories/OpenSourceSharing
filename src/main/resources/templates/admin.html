@@ -10,7 +10,7 @@
     <div th:switch="${listOfPosts}">
         <h4 th:case="null">No Posts yet</h4>
         <div th:case="*">
-            <h4>Posts></h4>
+            <h4>Posts</h4>
             <table>
                 <caption>Liste von Posts</caption>
                 <thead>
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div>
-        <a href="/admin/add-post">New Post</a>
+        <a href="/admin/addPost">New Post</a>
     </div>
 </div>
 </body>

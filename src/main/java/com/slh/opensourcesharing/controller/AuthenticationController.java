@@ -101,7 +101,7 @@ public class AuthenticationController
         ModelAndView modelAndView = new ModelAndView();
         Post value = postList.getPost(id);
         modelAndView.addObject("post", value);
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("addPost");
         return modelAndView;
     }
 
@@ -110,7 +110,7 @@ public class AuthenticationController
         ModelAndView modelAndView = new ModelAndView();
         postList.updatePost(post.getId(), post);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("addPost");
         return modelAndView;
     }
 
