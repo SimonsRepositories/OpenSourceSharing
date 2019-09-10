@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Hello Admin!</title>
 </head>
 <body>
-<h1>Hello Admin</h1>
+<h1>Hello Admin, Welcome to the Open Source Sharing </h1>
+<div>
+    <div th:switch="${listOfPosts}">
+        <h4 th:case="null">No Posts yet</h4>
+        <div th:case="*">
+            <h4>Posts></h4>
+            <table>
+                <caption>Liste von Posts</caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Author</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${listOfPosts}">
+                        <td th:text="${post.id}"></td>
+                        <td th:text="${post.author}"></td>
+                        <td th:text="${post.content}"></td>
+                        <td><a th:href="@{/admin/edit-post/{id}(id=${post.id})}">Edit</a></td>
+                        <td><a th:href="@{/admin/delete-post?id={id}(id=${post.id})}">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <a href="/admin/add-post">New Post</a>
+    </div>
+</div>
 </body>
 </html>
