@@ -1,12 +1,16 @@
 package com.slh.opensourcesharing.controller;
 
+import com.slh.opensourcesharing.model.Post;
+import com.slh.opensourcesharing.service.PostList;
 import com.slh.opensourcesharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slh.opensourcesharing.model.User;
@@ -17,6 +21,9 @@ public class AuthenticationController
 {
     @Autowired
     UserService userService;
+
+    @Autowired
+    PostList postList;
 
     @RequestMapping(value = { "/page/login" } , method = RequestMethod.GET)
     public ModelAndView login() {
@@ -44,6 +51,9 @@ public class AuthenticationController
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminHome() {
         ModelAndView modelAndView = new ModelAndView();
+        Post post = new Post();
+        modelAndView.addObject("post", post);
+        modelAndView.addObject("listOfPosts", postList.getAllPosts());
         modelAndView.setViewName("admin"); // resources/template/admin.html
         return modelAndView;
     }
@@ -65,6 +75,43 @@ public class AuthenticationController
         }
         modelAndView.addObject("user", new User());
         modelAndView.setViewName("register");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin", method = RequestMethod.POST)
+    public ModelAndView addPost(Post post, ModelMap modelMap) {
+        ModelAndView modelAndView = new ModelAndView();
+        postList.addPost(post);
+        modelAndView.addObject("listOfPosts", postList.getAllPosts());
+        modelAndView.setViewName("admin"); //resources/templates/admin.html
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/edit-post/{id}", method = RequestMethod.GET)
+    public ModelAndView editPost(@PathVariable("id") long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Post value = postList.getPost(id);
+        modelAndView.addObject("post", value);
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/edit-post", method = RequestMethod.POST)
+    public ModelAndView editPost(Post post) {
+        ModelAndView modelAndView = new ModelAndView();
+        postList.updatePost(post.getId(), post);
+        modelAndView.addObject("listOfPosts", postList.getAllPosts());
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/delete-post", method = RequestMethod.GET)
+    public ModelAndView deletePost(@RequestParam(name="id", required = true) long id)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        postList.removePost(id);
+        modelAndView.addObject("listOfPosts", postList.getAllPosts());
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 }
