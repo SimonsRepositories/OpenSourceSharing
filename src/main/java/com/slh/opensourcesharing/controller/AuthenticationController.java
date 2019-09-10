@@ -44,6 +44,9 @@ public class AuthenticationController
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
+        Post post = new Post();
+        modelAndView.addObject("post", post);
+        modelAndView.addObject("listOfPosts", postList.getAllPosts());
         modelAndView.setViewName("home"); //resources/templates/home.html
         return modelAndView;
     }
@@ -78,7 +81,7 @@ public class AuthenticationController
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/addPost", method = RequestMethod.GET)
+    @RequestMapping(value="/home/addPost", method = RequestMethod.GET)
     public ModelAndView showAddPost() {
         ModelAndView modelAndView = new ModelAndView();
         Post post = new Post();
@@ -87,16 +90,16 @@ public class AuthenticationController
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin/addPost", method = RequestMethod.POST)
+    @RequestMapping(value="/home/addPost", method = RequestMethod.POST)
     public ModelAndView addPost(Post post) {
         ModelAndView modelAndView = new ModelAndView();
         postList.addPost(post);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
-        modelAndView.setViewName("admin"); //resources/templates/admin.html
+        modelAndView.setViewName("home"); //resources/templates/admin.html
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/editPost/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/editPost/{id}", method = RequestMethod.GET)
     public ModelAndView editPost(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
         Post value = postList.getPost(id);
@@ -105,22 +108,22 @@ public class AuthenticationController
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/editPost", method = RequestMethod.POST)
+    @RequestMapping(value = "/home/editPost", method = RequestMethod.POST)
     public ModelAndView editPost(Post post) {
         ModelAndView modelAndView = new ModelAndView();
         postList.updatePost(post.getId(), post);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/delete-post", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/delete-post", method = RequestMethod.GET)
     public ModelAndView deletePost(@RequestParam(name="id", required = true) long id)
     {
         ModelAndView modelAndView = new ModelAndView();
         postList.removePost(id);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 }

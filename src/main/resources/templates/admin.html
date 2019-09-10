@@ -12,7 +12,7 @@
         <div th:case="*">
             <h4>Posts</h4>
             <table>
-                <caption>Liste von Posts</caption>
+                <caption>Liste von Usern</caption>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="post : ${listOfPosts}">
+                    <tr th:each="user : ${listOfPosts}">
                         <td th:text="${post.id}"></td>
                         <td th:text="${post.author}"></td>
                         <td th:text="${post.content}"></td>

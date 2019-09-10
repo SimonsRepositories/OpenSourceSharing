@@ -5,7 +5,7 @@
     <title>New Post</title>
 </head>
 <body>
-    <form action="#" th:action="@{/admin/addPost}" th:object="${post}" method="post">
+    <form action="#" th:action="@{/home/addPost}" th:object="${post}" method="post">
         <div style="max-width: 500px;">
             <div>
                 <label>Id: </label>
@@ -20,7 +20,7 @@
                 <input type="text" th:field="*{content}">
             </div>
             <p>
-                <button type="submit" value="Submit"><a href="/admin"></a>Submit</button>
+                <button type="submit" value="Submit"><a href="/home"></a>Submit</button>
             </p>
         </div>
     </form>
