@@ -96,21 +96,21 @@ public class AuthenticationController
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/edit-post/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/editPost/{id}", method = RequestMethod.GET)
     public ModelAndView editPost(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
         Post value = postList.getPost(id);
         modelAndView.addObject("post", value);
-        modelAndView.setViewName("addPost");
+        modelAndView.setViewName("editPost");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/edit-post", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/editPost", method = RequestMethod.POST)
     public ModelAndView editPost(Post post) {
         ModelAndView modelAndView = new ModelAndView();
         postList.updatePost(post.getId(), post);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
-        modelAndView.setViewName("addPost");
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 

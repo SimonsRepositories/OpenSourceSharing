@@ -25,7 +25,7 @@
                         <td th:text="${post.id}"></td>
                         <td th:text="${post.author}"></td>
                         <td th:text="${post.content}"></td>
-                        <td><a th:href="@{/admin/edit-post/{id}(id=${post.id})}">Edit</a></td>
+                        <td><a th:href="@{/admin/editPost/{id}(id=${post.id})}">Edit</a></td>
                         <td><a th:href="@{/admin/delete-post?id={id}(id=${post.id})}">Delete</a></td>
                     </tr>
                 </tbody>
