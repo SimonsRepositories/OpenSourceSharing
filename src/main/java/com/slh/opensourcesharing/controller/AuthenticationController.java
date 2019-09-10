@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slh.opensourcesharing.model.User;
+import com.slh.opensourcesharing.model.Email;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AuthenticationController
@@ -54,9 +56,7 @@ public class AuthenticationController
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminHome() {
         ModelAndView modelAndView = new ModelAndView();
-        Post post = new Post();
-        modelAndView.addObject("post", post);
-        modelAndView.addObject("listOfPosts", postList.getAllPosts());
+        modelAndView.addObject("listOfUsers", userService.findAll());
         modelAndView.setViewName("admin"); // resources/template/admin.html
         return modelAndView;
     }
@@ -126,4 +126,49 @@ public class AuthenticationController
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+    @RequestMapping(value="/admin/delete-user", method = RequestMethod.GET)
+    public ModelAndView deleteUser(@RequestParam(name="id", required = true) int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("listOfUsers", userService.findAll());
+        userService.removeUserById(id);
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/editUser/{id}", method = RequestMethod.GET)
+    public ModelAndView editUser(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        User value = userService.getUserById(id);
+        modelAndView.addObject("user", value);
+        modelAndView.setViewName("editUser");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/editUser", method = RequestMethod.POST)
+    public ModelAndView editUser(User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        userService.saveUserById(user, user.getId());
+        modelAndView.addObject("listOfUsers", userService.findAll());
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/home/emailForm", method = RequestMethod.GET)
+    public ModelAndView sendEmail() {
+        ModelAndView modelAndView = new ModelAndView();
+        Email email = new Email();
+        modelAndView.addObject("email", email);
+        modelAndView.setViewName("emailForm");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/home/emailForm", method = RequestMethod.POST)
+    public ModelAndView sendEmail(Email email) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("email", email);
+        modelAndView.setViewName("emailForm");
+        return modelAndView;
+    }
+
 }
