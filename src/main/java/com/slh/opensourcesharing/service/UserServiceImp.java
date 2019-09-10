@@ -1,15 +1,20 @@
 package com.slh.opensourcesharing.service;
 
+import com.slh.opensourcesharing.model.Post;
 import com.slh.opensourcesharing.model.Role;
 import com.slh.opensourcesharing.model.User;
 import com.slh.opensourcesharing.repository.RoleRepository;
 import com.slh.opensourcesharing.repository.UserRepository;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService
@@ -30,9 +35,34 @@ public class UserServiceImp implements UserService
         userRepository.save(user);
     }
 
+    public void saveUserById(User user, int id)
+    {
+        for(int i = 0; i < findAll().size(); i++) {
+            User tmpValue = findAll().get(i);
+            if (tmpValue.getId() == id) {
+                saveUser(user);
+                return;
+            }
+        }
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
     @Override
-    public boolean isUserAlreadyPresent(User user) {
-        //try to implement this method, as assignment
+    public User getUserById(int id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public boolean isUserAlreadyPresent(User user)
+    {
         return false;
+    }
+
+    @Cascade(CascadeType.DELETE)
+    public void removeUserById(int id) {
+        userRepository.deleteById(id);
     }
 }
