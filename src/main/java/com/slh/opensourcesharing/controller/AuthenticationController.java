@@ -78,8 +78,17 @@ public class AuthenticationController
         return modelAndView;
     }
 
-    @RequestMapping(value="/admin", method = RequestMethod.POST)
-    public ModelAndView addPost(Post post, ModelMap modelMap) {
+    @RequestMapping(value="/admin/addPost", method = RequestMethod.GET)
+    public ModelAndView showAddPost() {
+        ModelAndView modelAndView = new ModelAndView();
+        Post post = new Post();
+        modelAndView.addObject("post", post);
+        modelAndView.setViewName("addPost"); //resources/templates/admin.html
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/addPost", method = RequestMethod.POST)
+    public ModelAndView addPost(Post post) {
         ModelAndView modelAndView = new ModelAndView();
         postList.addPost(post);
         modelAndView.addObject("listOfPosts", postList.getAllPosts());
