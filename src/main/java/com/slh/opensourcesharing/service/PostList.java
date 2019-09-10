@@ -29,13 +29,14 @@ public class PostList
     }
 
     public Post getPost(long id) {
-        Post post = null;
-        for(Post postx: posts) {
-            if(post.getId() == id) {
-                post = postx;
+        Post returnPost = null;
+        for(Post value: posts) {
+            if(value.getId() == id) {
+                returnPost = value;
+                break;
             }
         }
-        return post;
+        return returnPost;
     }
 
     public void removePost(long id)
